@@ -1,0 +1,36 @@
+name: Magma Build & Publish
+on:
+  workflow_dispatch: null
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+    types: [ opened, reopened, synchronize ]
+jobs:
+  orc8r-build:
+    name: orc8r build job
+    runs-on: ubuntu-20.04
+    outputs:
+      artifacts: "orc8r-artifact"
+  nms-build:
+    name: nms build job
+    runs-on: ubuntu-20.04
+    outputs:
+      artifacts: "nms-artifact"
+  Publish_to_firebase:
+    name: Publish to firebase
+    if: always() && github.event_name == 'push' && github.repository_owner == 'magma'
+    runs-on: ubuntu-20.04
+    needs:
+      [
+        orc8r-build,
+        nms-build
+      ]
+    steps:
+      - name: Publish To 
+        env:
+          ORC8R_ARTIFACTS: ${{ needs.orc8r-build.outputs.artifacts }}
+        run: |
+          echo ${ORC8R_ARTIFACTS}
