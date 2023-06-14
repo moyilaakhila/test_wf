@@ -14,11 +14,19 @@ jobs:
     runs-on: ubuntu-20.04
     outputs:
       artifacts: "orc8r-artifact"
+    steps:
+      - name: Orc8r Build
+        run: |
+          echo "orc8r build"
   nms-build:
     name: nms build job
     runs-on: ubuntu-20.04
     outputs:
       artifacts: "nms-artifact"
+    steps:
+      - name: NMS Build
+        run: |
+          echo "NMS build"
   Publish_to_firebase:
     name: Publish to firebase
     if: always() && github.event_name == 'push' && github.repository_owner == 'magma'
