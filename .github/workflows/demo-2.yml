@@ -1,0 +1,19 @@
+name: Magma Build & Publish
+on:
+  workflow_dispatch: null
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types: [ opened, reopened, synchronize ]
+jobs:
+  agw-build:
+    name: agw build job
+    runs-on: ubuntu-20.04
+    outputs:
+      artifacts: ${{ steps.step1.outputs.test }}
+    steps:
+      - id: step1
+        run: echo "test=agw" >> "$GITHUB_OUTPUT"
