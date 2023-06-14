@@ -16,19 +16,17 @@ jobs:
       artifacts: ${{ steps.step1.outputs.test }}
     steps:
       - id: step1
-        run: echo "test=hello" >> "$GITHUB_OUTPUT"
+        run: echo "test=orc8r" >> "$GITHUB_OUTPUT"
   nms-build:
     name: nms build job
     runs-on: ubuntu-20.04
     outputs:
-      artifacts: "nms-artifact"
+      artifacts: ${{ steps.step1.outputs.test }}
     steps:
-      - name: NMS Build
-        run: |
-          echo "NMS build"
+      - id: step1
+        run: echo "test=nms" >> "$GITHUB_OUTPUT"
   Publish_to_firebase:
     name: Publish to firebase
-    if: github.event_name == 'push'
     runs-on: ubuntu-20.04
     needs:
       [
@@ -39,5 +37,7 @@ jobs:
       - name: Publish To 
         env:
           ORC8R_ARTIFACTS: ${{ needs.orc8r-build.outputs.artifacts }}
+          NMS_ARTIFACTS: ${{ needs.nms-build.outputs.artifacts }}
         run: |
           echo ${ORC8R_ARTIFACTS}
+          echo ${NMS_ARTIFACTS}
