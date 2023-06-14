@@ -1,6 +1,5 @@
 name: AGW Build & Publish
 on:
-  workflow_dispatch: null
   push:
     branches:
       - main
@@ -11,9 +10,14 @@ on:
 jobs:
   agw-build:
     name: agw build job
+    needs:
+      [
+        orc8r-build
+      ]
     runs-on: ubuntu-20.04
-    outputs:
-      artifacts: ${{ steps.step1.outputs.test }}
     steps:
-      - id: step1
-        run: echo "test=agw" >> "$GITHUB_OUTPUT"
+      env:
+        ORC8R_ARTIFACTS: ${{ needs.orc8r-build.outputs.artifacts }}
+      run: |
+        echo ${ORC8R_ARTIFACTS}
+      
