@@ -13,11 +13,10 @@ jobs:
     name: orc8r build job
     runs-on: ubuntu-20.04
     outputs:
-      artifacts: "orc8r-artifact"
+      artifacts: ${{ steps.step1.outputs.test }}
     steps:
-      - name: Orc8r Build
-        run: |
-          echo "orc8r build"
+      - id: step1
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
   nms-build:
     name: nms build job
     runs-on: ubuntu-20.04
