@@ -3,10 +3,10 @@ on:
   workflow_dispatch: null
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
     types: [ opened, reopened, synchronize ]
 jobs:
   orc8r-build:
