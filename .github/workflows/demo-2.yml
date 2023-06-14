@@ -1,4 +1,4 @@
-name: Magma Build & Publish
+name: AGW Build & Publish
 on:
   workflow_dispatch: null
   push:
